@@ -1,10 +1,11 @@
 package bootcamp.springboot.reto2.web.controller;
 
-import bootcamp.springboot.reto2.domain.dto.ErrorResponse;
-import bootcamp.springboot.reto2.domain.exception.ClientNotFoundException;
+
+
 import org.springframework.core.codec.DecodingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import bootcamp.springboot.reto2.domain.dto.ErrorResponse;
 
 import java.util.NoSuchElementException;
 
