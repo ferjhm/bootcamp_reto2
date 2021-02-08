@@ -10,6 +10,5 @@ import java.util.List;
 public interface RemesasService {
 
     public Mono<RemesasDto> listarRemesa(Long id);
-
-    public Flux<RemesasDto> obtenerRemesas();
+    public Flux<RemesasDto> listarRemesasDto();
 }

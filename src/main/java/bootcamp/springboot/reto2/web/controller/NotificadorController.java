@@ -5,8 +5,9 @@ import bootcamp.springboot.reto2.domain.dto.RemesasDto;
 import bootcamp.springboot.reto2.domain.service.NotificadorService;
 import bootcamp.springboot.reto2.domain.service.RemesasService;
 import bootcamp.springboot.reto2.persistence.entities.Cliente;
-import bootcamp.springboot.reto2.repositories.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -16,11 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/notificator")
-public class NotificadorController {
-
-    @Autowired
-    ClienteRepository clienteRepository;
-
+public class NotificadorController extends BaseController{
 
     @Autowired
     NotificadorService notificadorService;
@@ -28,67 +25,41 @@ public class NotificadorController {
     @Autowired
     RemesasService remesasService;
 
-    @GetMapping("/")
-    public String HolaMundo(){
-        return "Hola mundo";
+
+    @GetMapping("/allClients")
+    public ResponseEntity listarClientesDto(){
+
+        return buildSuccessResponse( notificadorService.listarClientesDto());
     }
 
-    @GetMapping("/{id}")
-    public Cliente obtenerCliente(@PathVariable("id") String id){
 
-        //clienteRepository.findById(1);
 
-        return clienteRepository.findById(Integer.parseInt(id)).get();
+    @GetMapping("/client/{id}")
+    public ResponseEntity obtenerClienteDto(@PathVariable ("id") Long id){
+
+        return buildSuccessResponse( notificadorService.obtenerClienteDto(id));
     }
 
-    @GetMapping("/allClient")
-    public List<ClienteDto> obtenerClientes(){
 
+    @PostMapping("/newClient")
+    @ResponseStatus(value= HttpStatus.CREATED)
+    public ResponseEntity nuevoClientesDto(@RequestBody ClienteDto clienteDto){
 
-        return notificadorService.obtenerClientes();
+        return buildSuccessResponse(notificadorService.ingresarClientesDto(clienteDto));
     }
 
-/*
+
     @GetMapping("/allRemesas")
-    public List<ClienteDto> obtenerRemesas(){
+    public ResponseEntity listarRemesasDto(){
 
-
-        return remesasService.obtenerRemesas();
-    }
-*/
-
-
-    @GetMapping("/todos")
-    public Flux<Cliente> listarClientes(){
-
-        return notificadorService.listarClientes();
-    }
-
-    @GetMapping("/todosDto")
-    public Flux<ClienteDto> listarClientesDto(){
-
-        return notificadorService.listarClientesDto();
+        return buildSuccessResponse(remesasService.listarRemesasDto());
     }
 
 
     @GetMapping("/remesas/{id}")
-    public Mono<RemesasDto> alertarRemesa(@PathVariable ("id") Long id){
+    public ResponseEntity alertarRemesa(@PathVariable ("id") Long id){
 
-        return remesasService.listarRemesa(id);
+        return buildSuccessResponse(remesasService.listarRemesa(id));
     }
-
-
-/*
-
-    @PostMapping
-    public void enviarData(){
-
-    }
-
-    @GetMapping
-    public Remesas getRemesa(){
-        return null
-    }
-*/
 
 }
