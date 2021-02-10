@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reto2-jfhm
+  labels:
+    app: reto2-jfhm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reto2-jfhm
+  template:
+    metadata:
+      labels:
+        app: reto2-jfhm
+    spec:
+      containers:
+        - name: reto2-jfhm
+          image: acrpurplebcp.azurecr.io/reto2-jfhm:jfhm
+          ports:
+            - containerPort: 8085
+      imagePullSecrets:
+        - name: acrpurplebcp-secret
