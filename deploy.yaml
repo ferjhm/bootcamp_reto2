@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: reto2-jfhm
-          image: acrpurplebcp.azurecr.io/reto2-jfhm:jfhm
+          image: acrpurplebcp.azurecr.io/reto2jfhm:jfhm_v2
           ports:
             - containerPort: 8085
       imagePullSecrets:
